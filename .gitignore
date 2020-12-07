@@ -1,0 +1,8 @@
+out/
+target/
+.idea/*
+target/maven-status/maven-compiler-plugin/compile/default-compile/
+*.iml
+workspace.xml
+backend_DB.db
+
