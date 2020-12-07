@@ -23,7 +23,6 @@ public class MiniStage extends Stage {
         this.parentList = parentList;
         Parent root = null;
         try {
-//            root = FXMLLoader.load(getClass().getResource("personal.fxml"));
             root = FXMLLoader.load(getClass().getResource("/fxml/personal.fxml"));
             setTitle("chatting with " + nickTo);
             Scene scene = new Scene(root, 300, 400);

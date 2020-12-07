@@ -23,7 +23,6 @@ public class Server {
 		Socket fileSocket = null;
 		try {
 			connect();
-//			AuthService authService = new AuthService(this.connection);
 			server = new ServerSocket(SERVER_PORT);
 			fileServer = new ServerSocket(FILE_SERVER_PORT);
 			System.out.println("Сервер запущен. Ожидаем клиентов...");

@@ -242,7 +242,6 @@ public class Controller implements Initializable {
         try {
             out.writeUTF("/auth " + loginField.getText() + " " + passwordField.getText());
             updateTitle(loginField.getText());
-//            loginField.clear();
             passwordField.clear();
         } catch (IOException e) {
             e.printStackTrace();
@@ -278,12 +277,4 @@ public class Controller implements Initializable {
         }
     }
 
-//    public void acceptDownloading() {      // приём файла, который отправил собеседник, после нажатия кнопки "да"
-//        FileChooser fileChooser = new FileChooser();
-//        File fileToDownload = fileChooser.showOpenDialog((MiniStage)yes.getScene().getWindow());
-//    }
-//
-//    public void rejectDownloading() {       // отказ от загрузки
-//        this.downloadPanel.setVisible(false);
-//    }
 }

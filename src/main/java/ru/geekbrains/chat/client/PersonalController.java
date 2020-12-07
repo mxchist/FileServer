@@ -21,15 +21,6 @@ public class PersonalController {
     @FXML
     TextField msgField;
 
-
-//    public PersonalController() {
-//        super();
-//        textArea = new TextArea();
-////        for (TextArea t: ((MiniStage)textArea.getScene().getWindow()).parentList ) {
-////            textArea.appendText(t.getText());
-////        }
-//    }
-
     public void btnClick() {
         DataOutputStream out = ((MiniStage)btnSent.getScene().getWindow()).out;
         String nickTo = ((MiniStage)btnSent.getScene().getWindow()).nickTo;
@@ -52,15 +43,7 @@ public class PersonalController {
         DataOutputStream out = ((MiniStage)btnUpload.getScene().getWindow()).out;
         String nickTo = ((MiniStage)btnUpload.getScene().getWindow()).nickTo;
 
-//        try {
-//            out.writeUTF("/putfile " + nickTo);
-//            textArea.clear();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
         DataOutputStream fout = ((MiniStage)btnUpload.getScene().getWindow()).fout;
-
         FileChooser fileChooser = new FileChooser();
         File fileToUpload = fileChooser.showOpenDialog(btnUpload.getScene().getWindow());
         try (FileInputStream fis = new FileInputStream(fileToUpload)) {

@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.lang.Byte;
-import java.util.ArrayList;
 
 public class ClientHandler {
     private Server server;
@@ -20,7 +19,6 @@ public class ClientHandler {
     private DataInputStream in;
     private DataInputStream fin;
     private String nick;
-    private static int maxSessionId;
     private int sessionId;
 
     List<String> blackList;
@@ -149,30 +147,6 @@ public class ClientHandler {
                 }
             }).start();
 
-            /*
-            //поток отвечающий за обмен файлами
-            new Thread( () -> {
-                try {
-                    byte b[];                                   // буфер для обмена файлом
-                    try {
-                        b = new byte[fin.available()];
-                        fin.read(b);                           // считываем в буфер данные из сокета
-                        fout.write(b);                          //
-                    } catch (IOException exc) {
-                        exc.printStackTrace();
-                    }
-                }
-                finally {
-                    try {
-                        fin.close();
-                    }
-                    catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
-             */
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -243,8 +217,6 @@ public class ClientHandler {
 		ResultSet rs = server.getMessagesHistory(nick);
 		while (rs.next()) {
 			String message = rs.getString(1);
-//			if (message.startsWith("to " + nick + ": ")		|| message.startsWith("from " + nick + ": "))
-//				continue;
 			out.writeUTF(message);
 		}
 	}
