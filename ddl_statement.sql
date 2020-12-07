@@ -40,6 +40,6 @@ create table messages_personal (
 );
 
 create table server_options (
-    id integer primary key autoincrement
-    , folder_to_store_files TEXT
+    option_name text primary key
+    , value TEXT
 );
