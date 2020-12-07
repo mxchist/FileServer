@@ -1,0 +1,16 @@
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
+
+<VBox fx:controller="ru.geekbrains.chat.client.PersonalController"
+      xmlns:fx="http://javafx.com/fxml" alignment="center">
+    <TextArea fx:id="textArea" editable="false" VBox.vgrow="ALWAYS"/>
+    <TextField fx:id="msgField" promptText="Введите сообщение..."/>
+    <HBox>
+        <Button text="Send Message" fx:id="btnSent" onAction="#btnClick"/>
+        <Button text="Upload file" fx:id="btnUpload" onAction="#buttonClickUpload"/>
+    </HBox>
+</VBox>
