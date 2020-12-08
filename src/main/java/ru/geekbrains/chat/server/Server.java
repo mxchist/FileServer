@@ -14,6 +14,7 @@ public class Server {
 	private final int FILE_SERVER_PORT = 8190;
 
 	private int sessionId;
+	private String folderToStore;
 
 	public Server() {
 		clients = new Vector<>();
@@ -23,6 +24,7 @@ public class Server {
 		Socket fileSocket = null;
 		try {
 			connect();
+			getServerOptions();
 			server = new ServerSocket(SERVER_PORT);
 			fileServer = new ServerSocket(FILE_SERVER_PORT);
 			System.out.println("Сервер запущен. Ожидаем клиентов...");
@@ -226,5 +228,22 @@ public class Server {
 		}
 	}
 
+	private void getServerOptions() {
+		String option_name = "folder_to_store_files";
+		try {
+			Statement st = this.connection.createStatement();
+			PreparedStatement ps = this.connection.prepareStatement("select value from server_options where option_name = ?");
+			ps.setString(1, option_name);
+			ResultSet rs = ps.executeQuery();
+			this.folderToStore = rs.getString("value");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.printf("Are you call the server option which is not define? option name: %s %n", option_name);
+		}
+	}
+
+	public String getFolderToStore() {
+		return this.folderToStore;
+	}
 
 }

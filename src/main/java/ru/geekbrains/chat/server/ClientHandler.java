@@ -1,8 +1,6 @@
 package ru.geekbrains.chat.server;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 import java.sql.SQLException;
 import java.sql.ResultSet;
@@ -19,12 +17,17 @@ public class ClientHandler {
     private DataInputStream in;
     private DataInputStream fin;
     private String nick;
+    public String login;
     private int sessionId;
 
     List<String> blackList;
 
     public String getNick() {
         return nick;
+    }
+
+    public String getLogin() {
+        return this.login;
     }
 
     public ClientHandler(Server server, Socket socket, Socket fileSocket) {
@@ -51,6 +54,7 @@ public class ClientHandler {
                                 if (!server.isNickBusy(newNick)) {
                                     sendMsg("/authok");
                                     nick = newNick;
+                                    this.login = tokens[1];
 
                                     this.sessionId = server.logNewClientSessionId(nick);
                                     server.subscribe(this);
@@ -80,6 +84,8 @@ public class ClientHandler {
                             else sendMsg("Пароли не соответствуют друг другу");
                         }
                     }
+
+                    testSaveFileToStorage();
 
                     while (true) {
                         String str = in.readUTF();
@@ -224,4 +230,72 @@ public class ClientHandler {
     public int getSessionId () {
     	return this.sessionId;
 	}
+
+    public void saveFileToStorage(String filename) throws IOException {
+        String personalPath = server.getFolderToStore() +"\\" + this.login;
+        File personalFolder = new File(personalPath);
+        if (!personalFolder.exists()) {
+            System.out.printf("A personal folder %s %n", (personalFolder.mkdir() ? "was created" : "was not created because something goes wrong"));
+        }
+        final File fileToSave = new File(personalPath + "\\" + filename );
+        final FileOutputStream fos = new FileOutputStream( fileToSave);
+
+        new Thread( () -> {
+            try {
+                byte[] b;
+                int bLen;
+                ArrayList<Byte> bFull = new ArrayList<Byte>();
+                try {
+                    while ((bLen = fin.available()) > 0) {
+                        b = new byte[bLen];                                // буфер для обмена файлом
+                        fin.read(b);         // считываем в буфер данные из сокета
+                        bFull.ensureCapacity(bFull.size() + bLen);
+                        for (byte b1 : b) {
+                            bFull.add(b1);
+                        }
+                    }
+                    bLen = bFull.size();
+                    b = new byte[bLen];
+                    for (int n = 0; n < bFull.size(); n++) {
+                        b[n] = bFull.get(n);
+                    }
+                    if (fileToSave.exists())
+                        fileToSave.delete();
+
+                    fileToSave.createNewFile();
+                    fos.write(b);
+//                    fos.flush();
+                } catch (IOException exc) {
+                    exc.printStackTrace();
+                }
+                finally {
+                    try {
+                        fos.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            finally {
+                try {
+                    fin.close();
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    public void testSaveFileToStorage() throws IOException {
+        System.out.println("Testing can I use method saveFileToStorage");
+        File file = new File("D:\\Max\\Pictures\\Screenshots\\cv.doc");
+        FileInputStream fis = new FileInputStream(file);
+        System.out.printf("A bytes available: %d %n", fis.available());
+        byte[] b = new byte[fis.available()];
+        fout.write(b);
+        fout.flush();
+        this.saveFileToStorage(file.getName());
+    }
+
 }
