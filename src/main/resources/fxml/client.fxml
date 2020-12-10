@@ -17,11 +17,12 @@
         <Button onAction="#showNewLoginPanel" text="Зарегистрироваться" />
     </HBox>
     <HBox VBox.vgrow="ALWAYS">
-        <VBox HBox.hgrow="ALWAYS">
+        <VBox HBox.hgrow="ALWAYS" minWidth="400">
             <TextArea fx:id="chatArea" editable="false" VBox.vgrow="ALWAYS" />
             <HBox fx:id="bottomPanel" managed="false" visible="false">
                 <TextField fx:id="msgField" onAction="#sendMsg" promptText="Введите сообщение..." HBox.hgrow="ALWAYS" />
                 <Button onAction="#sendMsg" text="Отправить" />
+                <Button  text="Файловое хранилище" />
             </HBox>
         </VBox>
         <ListView fx:id="clientsList" onMouseClicked="#selectClient" prefWidth="400" />
