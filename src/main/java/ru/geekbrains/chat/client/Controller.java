@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -132,6 +131,9 @@ public class Controller implements Initializable {
             in = new DataInputStream(socket.getInputStream());
             out = new DataOutputStream(socket.getOutputStream());
 
+            FileViewerStage sfv = new FileViewerStage();
+            sfv.
+
             fileSocket = new Socket(IP_ADDRESS, FILE_SERVER_PORT);
             setAuthorized(false);
             Thread thread = new Thread(() -> {
@@ -180,41 +182,41 @@ public class Controller implements Initializable {
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
-                } finally {
-                    try {
-                        in.close();
-                    }
-                    catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        fin.close();
-                    }
-                    catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        socket.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        fileSocket.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        out.close();
-                    }
-                    catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        fout.close();
-                    }
-                    catch (IOException e) {
-                        e.printStackTrace();
-                    }
+//                } finally {
+//                    try {
+//                        in.close();
+//                    }
+//                    catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                    try {
+//                        fin.close();
+//                    }
+//                    catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                    try {
+//                        socket.close();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                    try {
+//                        fileSocket.close();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                    try {
+//                        out.close();
+//                    }
+//                    catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                    try {
+//                        fout.close();
+//                    }
+//                    catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
                     setAuthorized(false);
                 }
             });

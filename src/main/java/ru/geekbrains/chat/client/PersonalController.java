@@ -57,12 +57,12 @@ public class PersonalController {
         catch (IOException e) {
             e.printStackTrace();
         }
-        finally {
-            try {
-                fout.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+//        finally {
+//            try {
+//                fout.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 }

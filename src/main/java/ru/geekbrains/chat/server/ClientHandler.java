@@ -115,36 +115,36 @@ public class ClientHandler {
                 } catch (IOException | SQLException e) {
                     e.printStackTrace();
                 } finally {
-                    try {
-                        in.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        out.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        socket.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        fin.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        fout.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        fileSocket.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+//                    try {
+//                        in.close();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                    try {
+//                        out.close();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                    try {
+//                        socket.close();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                    try {
+//                        fin.close();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                    try {
+//                        fout.close();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                    try {
+//                        fileSocket.close();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
                     try {
                         server.unsubscribe(this);
                     } catch (IOException e) {
@@ -293,6 +293,11 @@ public class ClientHandler {
         FileInputStream fis = new FileInputStream(file);
         System.out.printf("A bytes available: %d %n", fis.available());
         byte[] b = new byte[fis.available()];
+        try {
+            fis.read(b);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         fout.write(b);
         fout.flush();
         this.saveFileToStorage(file.getName());
