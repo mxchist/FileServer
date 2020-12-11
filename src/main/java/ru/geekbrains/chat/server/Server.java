@@ -15,6 +15,7 @@ public class Server {
 
 	private int sessionId;
 	private String folderToStore;
+	private String delimiter;
 
 	public Server() {
 		clients = new Vector<>();
@@ -24,7 +25,8 @@ public class Server {
 		Socket fileSocket = null;
 		try {
 			connect();
-			getServerOptions();
+			this.folderToStore= getServerOptions("folder_to_store_files");
+			this.delimiter= getServerOptions("delimiter");
 			server = new ServerSocket(SERVER_PORT);
 			fileServer = new ServerSocket(FILE_SERVER_PORT);
 			System.out.println("Сервер запущен. Ожидаем клиентов...");
@@ -228,22 +230,24 @@ public class Server {
 		}
 	}
 
-	private void getServerOptions() {
-		String option_name = "folder_to_store_files";
+	private String getServerOptions(String option_name) {
 		try {
 			Statement st = this.connection.createStatement();
 			PreparedStatement ps = this.connection.prepareStatement("select value from server_options where option_name = ?");
 			ps.setString(1, option_name);
 			ResultSet rs = ps.executeQuery();
-			this.folderToStore = rs.getString("value");
+			return rs.getString("value");
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.printf("Are you call the server option which is not define? option name: %s %n", option_name);
 		}
+		return null;
 	}
 
 	public String getFolderToStore() {
 		return this.folderToStore;
 	}
+
+	public String getDelimiter() {return this.delimiter;}
 
 }

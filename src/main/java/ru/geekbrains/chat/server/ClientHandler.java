@@ -240,12 +240,12 @@ public class ClientHandler {
 
     public void saveFileToStorage(String filename) throws IOException {
         this.fin = new DataInputStream(fileSocket.getInputStream());
-        String personalPath = server.getFolderToStore() +"\\" + this.login;
+        String personalPath = server.getFolderToStore() + server.getDelimiter() + this.login;
         File personalFolder = new File(personalPath);
         if (!personalFolder.exists()) {
             System.out.printf("A personal folder %s %n", (personalFolder.mkdir() ? "was created" : "was not created because something goes wrong"));
         }
-        final File fileToSave = new File(personalPath + "\\" + filename );
+        final File fileToSave = new File(personalPath + server.getDelimiter() + filename );
         final FileOutputStream fos = new FileOutputStream( fileToSave);
 
 //        try {
@@ -313,7 +313,7 @@ public class ClientHandler {
     }
 
     public String getFilesList() {
-        String personalPath = server.getFolderToStore() +"\\" + this.login;
+        String personalPath = server.getFolderToStore() + server.getDelimiter() + this.login;
         File personalFolder = new File(personalPath);
         if (!personalFolder.exists()) {
             System.out.printf("A personal folder %s %n", (personalFolder.mkdir() ? "was created" : "was not created because something goes wrong"));
