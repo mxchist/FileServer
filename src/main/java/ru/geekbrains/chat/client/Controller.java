@@ -285,10 +285,18 @@ public class Controller implements Initializable {
         }
     }
 
-    public void pressFileStorage(MouseEvent mouseEvent) throws IOException {
-        fout = new DataOutputStream(fileSocket.getOutputStream());
-        FileViewerStage sfv = new FileViewerStage(files, in, out, fin, fout);
-        sfv.show();
+    public void pressFileStorage(MouseEvent mouseEvent)  {
+        try {
+            fout = new DataOutputStream(fileSocket.getOutputStream());
+            FileViewerStage sfv = new FileViewerStage(files, in, out, fin, fout);
+            sfv.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally {
+            System.out.print("Finally");
+        }
     }
 
 }

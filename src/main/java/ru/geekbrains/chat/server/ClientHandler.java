@@ -38,7 +38,6 @@ public class ClientHandler {
 
             this.in = new DataInputStream(socket.getInputStream());
             this.out = new DataOutputStream(socket.getOutputStream());
-            this.fin = new DataInputStream(fileSocket.getInputStream());
             this.fout = new DataOutputStream(fileSocket.getOutputStream());
 
             this.blackList = new ArrayList<>();
@@ -85,7 +84,7 @@ public class ClientHandler {
                         }
                     }
 
-                    testSaveFileToStorage();
+//                    testSaveFileToStorage();
 
                     while (true) {
                         String str = in.readUTF();
@@ -107,7 +106,7 @@ public class ClientHandler {
                                 out.writeUTF("/listFiles" + getFilesList());
                             }
                             if (str.startsWith("/saveFile")) { // /w nick3 lsdfhldf sdkfjhsdf wkerhwr
-                                String[] tokens = str.split(" ", 1);
+                                String[] tokens = str.split(" ", 2);
                                 saveFileToStorage(tokens[1]);
                             }
                             if (str.startsWith("/blacklist ")) { // /blacklist nick3
@@ -176,7 +175,7 @@ public class ClientHandler {
 
     public void sentPersonalFile(String nickto) {
         new Thread( () -> {
-            try {
+//            try {
                 byte[] b;
                 int bLen;
                 ArrayList<Byte> bFull = new ArrayList<Byte>();
@@ -198,15 +197,15 @@ public class ClientHandler {
                 } catch (IOException exc) {
                     exc.printStackTrace();
                 }
-            }
-            finally {
-                try {
-                    fin.close();
-                }
-                catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+//            }
+//            finally {
+//                try {
+//                    fin.close();
+//                }
+//                catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
         }).start();
     }
 
@@ -240,6 +239,7 @@ public class ClientHandler {
 	}
 
     public void saveFileToStorage(String filename) throws IOException {
+        this.fin = new DataInputStream(fileSocket.getInputStream());
         String personalPath = server.getFolderToStore() +"\\" + this.login;
         File personalFolder = new File(personalPath);
         if (!personalFolder.exists()) {
@@ -248,8 +248,8 @@ public class ClientHandler {
         final File fileToSave = new File(personalPath + "\\" + filename );
         final FileOutputStream fos = new FileOutputStream( fileToSave);
 
-        new Thread( () -> {
-            try {
+//        try {
+            new Thread( () -> {
                 byte[] b;
                 int bLen;
                 ArrayList<Byte> bFull = new ArrayList<Byte>();
@@ -283,16 +283,17 @@ public class ClientHandler {
                         e.printStackTrace();
                     }
                 }
-            }
-            finally {
-                try {
-                    fin.close();
-                }
-                catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
+            }).start();
+//        }
+//        finally {
+//            try {
+//                fin.close();
+//                System.out.println("Fin close");
+//            }
+//            catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
     public void testSaveFileToStorage() throws IOException {

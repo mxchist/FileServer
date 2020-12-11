@@ -54,6 +54,7 @@ public class FileViewerController  implements Initializable {
 
     public void sendFile() {
         fout = ((FileViewerStage)btnUpload.getScene().getWindow()).fout;
+        out = ((FileViewerStage)btnUpload.getScene().getWindow()).out;
         FileChooser fileChooser = new FileChooser();
         File fileToUpload = fileChooser.showOpenDialog(btnUpload.getScene().getWindow());
         try (FileInputStream fis = new FileInputStream(fileToUpload)) {
@@ -67,7 +68,7 @@ public class FileViewerController  implements Initializable {
         catch (IOException e) {
             e.printStackTrace();
         }
-        ((FileViewerStage)btnUpload.getScene().getWindow()).close();
+//        ((FileViewerStage)btnUpload.getScene().getWindow()).close();
     }
 
     public void downloadFile() {
