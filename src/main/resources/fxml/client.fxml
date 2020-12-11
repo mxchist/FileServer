@@ -22,7 +22,7 @@
             <HBox fx:id="bottomPanel" managed="false" visible="false">
                 <TextField fx:id="msgField" onAction="#sendMsg" promptText="Введите сообщение..." HBox.hgrow="ALWAYS" />
                 <Button onAction="#sendMsg" text="Отправить" />
-                <Button  text="Файловое хранилище" />
+                <Button onMouseClicked="#pressFileStorage" text="Файловое хранилище" />
             </HBox>
         </VBox>
         <ListView fx:id="clientsList" onMouseClicked="#selectClient" prefWidth="400" />

@@ -76,6 +76,7 @@ public class Controller implements Initializable {
     private boolean isAuthorized;
 
     ArrayList<TextArea> textAreas;
+    ArrayList<String> files = new ArrayList<String>();;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -131,9 +132,6 @@ public class Controller implements Initializable {
             in = new DataInputStream(socket.getInputStream());
             out = new DataOutputStream(socket.getOutputStream());
 
-            FileViewerStage sfv = new FileViewerStage();
-            sfv.
-
             fileSocket = new Socket(IP_ADDRESS, FILE_SERVER_PORT);
             setAuthorized(false);
             Thread thread = new Thread(() -> {
@@ -142,6 +140,7 @@ public class Controller implements Initializable {
                         String str = in.readUTF();
                         if (str.startsWith("/authok")) {
                             setAuthorized(true);
+                            out.writeUTF("/listFiles");
                             break;
                         } else if (str.startsWith("/regok")) {
                             showNewLoginPanel(false);
@@ -175,6 +174,14 @@ public class Controller implements Initializable {
                                 fds.requestFocus();
                                 fds.setAlwaysOnTop(true);
                             });
+                        }
+                        if (str.startsWith("/listFiles")) {
+                            files.clear();
+                            ArrayList<String> tempfiles = new ArrayList<String>();
+                            final String[] tokens = str.split(",");
+                            for (String s : tokens) {
+                                files.add(s);
+                            };
                         }
                         else {
                             chatArea.appendText(str + "\n");
@@ -277,6 +284,11 @@ public class Controller implements Initializable {
             MiniStage ms = new MiniStage(selectedItem, out, fout, textAreas);
             ms.show();
         }
+    }
+
+    public void pressFileStorage(MouseEvent mouseEvent) throws IOException {
+        FileViewerStage sfv = new FileViewerStage(files);
+        sfv.show();
     }
 
 }

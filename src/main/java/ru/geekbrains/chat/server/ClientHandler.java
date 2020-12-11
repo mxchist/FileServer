@@ -102,6 +102,10 @@ public class ClientHandler {
                                 String[] tokens = str.split(" ", 2);
                                 sentPersonalFile(tokens[1]);
                             }
+                            if (str.startsWith("/listFiles")) { // /w nick3 lsdfhldf sdkfjhsdf wkerhwr
+                                String[] tokens = str.split(" ", 1);
+                                out.writeUTF("/listFiles" + getFilesList());
+                            }
                             if (str.startsWith("/blacklist ")) { // /blacklist nick3
                                 String[] tokens = str.split(" ");
                                 blackList.add(tokens[1]);
@@ -301,6 +305,21 @@ public class ClientHandler {
         fout.write(b);
         fout.flush();
         this.saveFileToStorage(file.getName());
+    }
+
+    public String getFilesList() {
+        String personalPath = server.getFolderToStore() +"\\" + this.login;
+        File personalFolder = new File(personalPath);
+        if (!personalFolder.exists()) {
+            System.out.printf("A personal folder %s %n", (personalFolder.mkdir() ? "was created" : "was not created because something goes wrong"));
+            return "";
+        }
+
+        String result = "";
+        for (String f : personalFolder.list()) {
+            result = result + "," + f;
+        }
+        return  result;
     }
 
 }
