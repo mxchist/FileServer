@@ -177,7 +177,6 @@ public class Controller implements Initializable {
                         }
                         if (str.startsWith("/listFiles")) {
                             files.clear();
-                            ArrayList<String> tempfiles = new ArrayList<String>();
                             final String[] tokens = str.split(",");
                             for (String s : tokens) {
                                 files.add(s);
@@ -287,7 +286,8 @@ public class Controller implements Initializable {
     }
 
     public void pressFileStorage(MouseEvent mouseEvent) throws IOException {
-        FileViewerStage sfv = new FileViewerStage(files);
+        fout = new DataOutputStream(fileSocket.getOutputStream());
+        FileViewerStage sfv = new FileViewerStage(files, in, out, fin, fout);
         sfv.show();
     }
 

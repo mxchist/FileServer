@@ -8,10 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -22,7 +19,7 @@ public class FileViewerController  implements Initializable {
     VBox downloadPanel;
 
     @FXML
-    Button uploadButton;
+    Button btnUpload;
 
     @FXML
     Button downloadButton;
@@ -34,6 +31,10 @@ public class FileViewerController  implements Initializable {
     ListView files;
 
     ArrayList<String> fs;
+    DataInputStream in;
+    DataOutputStream out;
+    DataInputStream fin;
+    DataOutputStream fout;
 
     @FXML
     public void initialize (URL url, ResourceBundle r) {
@@ -44,7 +45,7 @@ public class FileViewerController  implements Initializable {
     }
 
     public void fillList(MouseEvent mouseEvent) {
-        files.getItems().removeAll();
+        files.getItems().clear();
         fs = ((FileViewerStage)files.getScene().getWindow()).files;
         for (int i = 1; i < fs.size(); i++) {
             files.getItems().add(fs.get(i));
@@ -52,8 +53,21 @@ public class FileViewerController  implements Initializable {
     }
 
     public void sendFile() {
-        fs = ((FileViewerStage)files.getScene().getWindow()).files;
-        System.out.print("");
+        fout = ((FileViewerStage)btnUpload.getScene().getWindow()).fout;
+        FileChooser fileChooser = new FileChooser();
+        File fileToUpload = fileChooser.showOpenDialog(btnUpload.getScene().getWindow());
+        try (FileInputStream fis = new FileInputStream(fileToUpload)) {
+            byte b[];
+            b = new byte[fis.available()];
+            fis.read(b);
+            fout.write(b);
+            fout.flush();
+            out.writeUTF("/saveFile " + fileToUpload.getName());
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        ((FileViewerStage)btnUpload.getScene().getWindow()).close();
     }
 
     public void downloadFile() {

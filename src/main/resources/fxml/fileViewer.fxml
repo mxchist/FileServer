@@ -11,7 +11,7 @@
     <ListView fx:id="files" editable="false" VBox.vgrow="ALWAYS"  prefWidth="400" />
     <HBox>
         <Button fx:id = "viewfilesbutton"  text = "Показать файлы"   onMouseClicked="#fillList"/>
-        <Button fx:id = "uploadButton" text = "Отправить файл" onAction="#sendFile"/>
+        <Button fx:id = "btnUpload" text = "Отправить файл" onAction="#sendFile"/>
         <Button fx:id = "downloadButton"  text = "Скачать файл"  onAction="#downloadFile"/>
     </HBox>
 </VBox>

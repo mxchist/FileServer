@@ -106,6 +106,10 @@ public class ClientHandler {
                                 String[] tokens = str.split(" ", 1);
                                 out.writeUTF("/listFiles" + getFilesList());
                             }
+                            if (str.startsWith("/saveFile")) { // /w nick3 lsdfhldf sdkfjhsdf wkerhwr
+                                String[] tokens = str.split(" ", 1);
+                                saveFileToStorage(tokens[1]);
+                            }
                             if (str.startsWith("/blacklist ")) { // /blacklist nick3
                                 String[] tokens = str.split(" ");
                                 blackList.add(tokens[1]);
