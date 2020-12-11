@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+
+
+<VBox alignment="center"  xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.112-ea" fx:controller="ru.geekbrains.chat.client.FileViewerController"
+    >
+    <ListView fx:id="files" editable="false" VBox.vgrow="ALWAYS"  prefWidth="400" />
+    <HBox>
+        <Button fx:id = "viewfilesbutton"  text = "Показать файлы"   onMouseClicked="#fillList"/>
+        <Button fx:id = "btnUpload" text = "Отправить файл" onAction="#sendFile"/>
+        <Button fx:id = "downloadButton"  text = "Скачать файл"  onAction="#downloadFile"/>
+    </HBox>
+</VBox>
