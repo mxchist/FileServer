@@ -57,11 +57,15 @@ public class FileViewerController  implements Initializable {
         out = ((FileViewerStage)btnUpload.getScene().getWindow()).out;
         FileChooser fileChooser = new FileChooser();
         File fileToUpload = fileChooser.showOpenDialog(btnUpload.getScene().getWindow());
+        byte b[];
+        int bLen;
         try (FileInputStream fis = new FileInputStream(fileToUpload)) {
-            byte b[];
-            b = new byte[fis.available()];
-            fis.read(b);
-            fout.write(b);
+            while ((bLen = fis.available()) > 0) {
+                bLen = (bLen < 4096 ? bLen : 4096);
+                b = new byte[bLen];
+                System.out.printf("Was read %d bytes %n", fis.read(b));
+                fout.write(b);
+            }
             fout.flush();
             out.writeUTF("/saveFile " + fileToUpload.getName());
         }

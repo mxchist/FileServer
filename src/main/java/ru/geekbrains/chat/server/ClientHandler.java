@@ -252,27 +252,20 @@ public class ClientHandler {
             new Thread( () -> {
                 byte[] b;
                 int bLen;
-                ArrayList<Byte> bFull = new ArrayList<Byte>();
                 try {
+                    if (fileToSave.exists() && fin.available() > 0) {
+                        fileToSave.delete();
+                        fileToSave.createNewFile();
+                    }
+
                     while ((bLen = fin.available()) > 0) {
+                        bLen = (bLen < 4096 ? bLen : 4096);
                         b = new byte[bLen];                                // буфер для обмена файлом
                         fin.read(b);         // считываем в буфер данные из сокета
-                        bFull.ensureCapacity(bFull.size() + bLen);
-                        for (byte b1 : b) {
-                            bFull.add(b1);
-                        }
+                        fos.write(b);
                     }
-                    bLen = bFull.size();
-                    b = new byte[bLen];
-                    for (int n = 0; n < bFull.size(); n++) {
-                        b[n] = bFull.get(n);
-                    }
-                    if (fileToSave.exists())
-                        fileToSave.delete();
 
-                    fileToSave.createNewFile();
-                    fos.write(b);
-//                    fos.flush();
+                    fos.flush();
                 } catch (IOException exc) {
                     exc.printStackTrace();
                 }
