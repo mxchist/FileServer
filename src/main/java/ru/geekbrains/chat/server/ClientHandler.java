@@ -122,36 +122,6 @@ public class ClientHandler {
                 } catch (IOException | SQLException e) {
                     e.printStackTrace();
                 } finally {
-//                    try {
-//                        in.close();
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                    try {
-//                        out.close();
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                    try {
-//                        socket.close();
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                    try {
-//                        fin.close();
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                    try {
-//                        fout.close();
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                    try {
-//                        fileSocket.close();
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
                     try {
                         server.unsubscribe(this);
                     } catch (IOException e) {
@@ -175,7 +145,6 @@ public class ClientHandler {
 
     public void sentPersonalFile(String nickto) {
         new Thread( () -> {
-//            try {
                 byte[] b;
                 int bLen;
                 ArrayList<Byte> bFull = new ArrayList<Byte>();
@@ -197,15 +166,6 @@ public class ClientHandler {
                 } catch (IOException exc) {
                     exc.printStackTrace();
                 }
-//            }
-//            finally {
-//                try {
-//                    fin.close();
-//                }
-//                catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
         }).start();
     }
 
@@ -248,7 +208,6 @@ public class ClientHandler {
         final File fileToSave = new File(personalPath + server.getDelimiter() + filename );
         final FileOutputStream fos = new FileOutputStream( fileToSave);
 
-//        try {
             new Thread( () -> {
                 byte[] b;
                 int bLen;
@@ -277,16 +236,6 @@ public class ClientHandler {
                     }
                 }
             }).start();
-//        }
-//        finally {
-//            try {
-//                fin.close();
-//                System.out.println("Fin close");
-//            }
-//            catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
     }
 
     public void testSaveFileToStorage() throws IOException {

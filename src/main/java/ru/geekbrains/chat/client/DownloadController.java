@@ -53,12 +53,6 @@ public class DownloadController {
 
         } catch (IOException e) {
             e.printStackTrace();
-//        } finally {
-//            try {
-//                fin.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
         }
         ((FileDownloadStage) yes.getScene().getWindow()).close();
     }
