@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -77,6 +78,7 @@ public class FileViewerController  implements Initializable {
     }
 
     public void downloadFile() {
+
         ((FileDownloadStage)downloadButton.getScene().getWindow()).close();
     }
 }
